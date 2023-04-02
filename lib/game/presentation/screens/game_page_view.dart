@@ -1,3 +1,5 @@
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+
 import '../../presentation/widget/game_item.dart';
 
 import '../../models/api_gettre.dart';
@@ -31,37 +33,47 @@ class _GamePageScreenState extends State<GamePageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      return BlocBuilder<GameBloc, GameState>(
-        builder: (context, state) {
-          switch (state.status) {
-            case GameStatus.fail:
-              return failCase(repoData: repoData);
-            case GameStatus.success:
-              return ListView.builder(
-                controller: _scrollController,
-                itemCount: state.hasReachedMax
-                    ? state.games!.length
-                    : state.games!.length + 1,
-                itemBuilder: ((context, index) {
-                  return index >= state.games!.length
-                      ? const Center(
-                          child: SizedBox(
-                              height: 25,
-                              width: 25,
-                              child: CircularProgressIndicator()),
-                        )
-                      : GameItem(state.games![index]);
-                }),
-              );
-            default:
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-          }
-        },
-      );
-    });
+    return BlocBuilder<GameBloc, GameState>(
+      builder: (context, state) {
+        switch (state.status) {
+          case GameStatus.fail:
+            return const FailCase();
+          case GameStatus.success:
+            return RefreshIndicator(
+              onRefresh: () async {
+                 context.read<GameBloc>().add(GameFetched());
+              },
+              child: AnimationLimiter(
+                child: ListView.builder(
+                  controller: _scrollController,
+                  itemCount: state.hasReachedMax ? state.games!.length : state.games!.length + 1,
+                  itemBuilder: ((context, index) {
+                    return index >= state.games!.length
+                        ? const Center(
+                            child: SizedBox(height: 25, width: 25, child: CircularProgressIndicator()),
+                          )
+                        : AnimationConfiguration.staggeredList(
+                            position: index,
+                            delay: const Duration(milliseconds: 80),
+                            duration: const Duration(milliseconds: 375),
+                            child: SlideAnimation(
+                              horizontalOffset: 50.0,
+                              child: FadeInAnimation(
+                                child: GameItem(state.games![index]),
+                              ),
+                            ),
+                          );
+                  }),
+                ),
+              ),
+            );
+          default:
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+        }
+      },
+    );
   }
 
   @override

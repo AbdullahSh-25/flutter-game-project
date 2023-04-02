@@ -9,34 +9,29 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(children: [
-        AppBar(
-          title: const Text('ElGame Menu'),
-          automaticallyImplyLeading: false,
-        ),
-        ListTile(
-          leading: const Icon(Icons.list_alt_outlined),
-          title: const Text('All'),
-          onTap: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: ((context) => MainPage())));
-          },
-        ),
-        Divider(
-            color: Colors.teal[200],
-            thickness: 3,
-            height: 30,
-            endIndent: 25,
-            indent: 25),
-        ListTile(
-          leading: const Icon(Icons.favorite),
-          title: const Text('Favoraite'),
-          onTap: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: ((context) => const FavScreen())));
-          },
-        ),
-      ]),
+      child: Column(
+        children: [
+          AppBar(
+            title: const Text('ElGame Menu'),
+            automaticallyImplyLeading: false,
+          ),
+          ListTile(
+            leading: const Icon(Icons.list_alt_outlined),
+            title: const Text('All'),
+            onTap: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => MainPage())));
+            },
+          ),
+          Divider(color: Colors.teal[200], thickness: 3, height: 30, endIndent: 25, indent: 25),
+          ListTile(
+            leading: const Icon(Icons.favorite),
+            title: const Text('Favoraite'),
+            onTap: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => const FavScreen())));
+            },
+          ),
+        ],
+      ),
     );
   }
 }

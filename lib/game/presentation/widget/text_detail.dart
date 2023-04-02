@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class buildTextDetail extends StatelessWidget {
-  const buildTextDetail({
+class BuildTextDetail extends StatelessWidget {
+  const BuildTextDetail({
     Key? key,
     required this.title,
     required this.detail,
@@ -13,6 +13,7 @@ class buildTextDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           title,
@@ -22,7 +23,6 @@ class buildTextDetail extends StatelessWidget {
           width: 250,
           child: Text(
             detail,
-            style: const TextStyle(overflow: TextOverflow.ellipsis),
           ),
         ),
       ],

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../models/games.dart';
 
-class buildSliverAppBar extends StatelessWidget {
-  const buildSliverAppBar({
+class BuildSliverAppBar extends StatelessWidget {
+  const BuildSliverAppBar({
     Key? key,
     required this.game,
   }) : super(key: key);

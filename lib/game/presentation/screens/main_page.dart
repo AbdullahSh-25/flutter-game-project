@@ -37,7 +37,7 @@ class _MainPageState extends State<MainPage> {
         builder: (_) {
           return ChangeNotifierProvider(
             create: (context) => SearchGames(),
-            child: SearchScreen(),
+            child: const SearchScreen(),
           );
         },
       ),

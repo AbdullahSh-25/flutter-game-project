@@ -9,17 +9,12 @@ class FavScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider(
-      create: (context) => MyDatabase(),
-      child: Builder(builder: (context) {
-        return Scaffold(
-          drawer: const AppDrawer(),
-          appBar: AppBar(
-            title: const Text('Favoraite'),
-          ),
-          body: _buildTaskList(context),
-        );
-      }),
+    return Scaffold(
+      drawer: const AppDrawer(),
+      appBar: AppBar(
+        title: const Text('Favoraite'),
+      ),
+      body: _buildTaskList(context),
     );
   }
 
@@ -29,7 +24,6 @@ class FavScreen extends StatelessWidget {
       stream: dao.watchAllGames(),
       builder: (context, AsyncSnapshot<List<Game>> snapshot) {
         final tasks = snapshot.data ?? [];
-
         return tasks.isEmpty
             ? const Center(
                 child: Text(
@@ -102,7 +96,7 @@ class FavScreen extends StatelessWidget {
       onDismissed: (dismissDirection) {
         dao.deleteGame(item);
       },
-      child: GameFavItem(item),
+      child: GameFavItem(game: item),
     );
   }
 }

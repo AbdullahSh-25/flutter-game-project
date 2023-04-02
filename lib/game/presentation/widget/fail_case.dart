@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../models/game_repo.dart';
 
-class failCase extends StatelessWidget {
-  const failCase({
+class FailCase extends StatelessWidget {
+  const FailCase({
     Key? key,
-    required this.repoData,
   }) : super(key: key);
 
-  final RepoData repoData;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,7 @@ class failCase extends StatelessWidget {
             height: 15,
           ),
           Text(
-            'Somthing Gone Rong',
+            'Something Gone Wrong',
             style: TextStyle(
               fontSize: 20,
             ),

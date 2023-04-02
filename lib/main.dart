@@ -13,11 +13,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData.dark(),
-      home: Provider(create: (context) => MyDatabase(), child: MainPage()),
+    return Provider<MyDatabase>(
+      create: (context) => MyDatabase(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData.dark(),
+        home: MainPage(),
+      ),
     );
   }
 }

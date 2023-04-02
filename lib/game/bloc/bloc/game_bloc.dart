@@ -1,4 +1,3 @@
-// ignore_for_file: invalid_use_of_visible_for_testing_member
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -31,7 +30,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       transformer: throttleDroppable(throttleDuration),
     );
   }
-  Future<void> handler(GameEvent event, Emitter<GameState> emitt) async {
+  Future<void> handler(GameEvent event, Emitter<GameState> emit) async {
     try {
 
       if (state.hasReachedMax) return;

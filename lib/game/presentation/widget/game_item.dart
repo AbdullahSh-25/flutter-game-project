@@ -1,11 +1,13 @@
 import 'package:bloc_test_one/game/models/games.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/game_detail_screen.dart';
 
 class GameItem extends StatelessWidget {
   final Results game;
-  const GameItem(this.game);
+
+  const GameItem(this.game, {Key? key}) : super(key: key);
 
   void openGamePageDetail(BuildContext context) {
     Navigator.of(context).push(
@@ -25,8 +27,7 @@ class GameItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
         child: Card(
           elevation: 5,
-          child: Container(
-              child: Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
@@ -38,12 +39,15 @@ class GameItem extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: game.backgroundImage!.isNotEmpty
-                        ? FadeInImage.assetNetwork(
+                        ? CachedNetworkImage(
+                            imageUrl: game.backgroundImage!,
                             width: double.infinity,
                             height: double.infinity,
-                            placeholder: 'assets/image/Infinity.gif',
-                            image: game.backgroundImage!,
                             fit: BoxFit.cover,
+                            placeholderFadeInDuration: const Duration(milliseconds: 700),
+                            placeholder: (context, _) => Image.asset(
+                              'assets/image/Infinity.gif',
+                            ),
                           )
                         : Image.asset('assets/image/fail.jpg'),
                   ),
@@ -61,8 +65,7 @@ class GameItem extends StatelessWidget {
                     child: Text(
                       game.name!,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w700),
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                     ),
                   ),
                   const SizedBox(
@@ -97,7 +100,7 @@ class GameItem extends StatelessWidget {
                 ],
               ),
             ],
-          )),
+          ),
         ),
       ),
     );

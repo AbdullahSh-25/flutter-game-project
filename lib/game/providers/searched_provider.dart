@@ -7,20 +7,23 @@ import 'package:http/http.dart' as http;
 
 class SearchGames with ChangeNotifier {
   List<Results> _items = [];
-
+  bool isSearching = false;
   List<Results> get items {
     return [..._items];
   }
 
   Future<void> search(String val) async {
-    final String result = await getsearchresponse(val);
-    final gamesresult = GamePageDetail.fromJson(json.decode(result));
-    final games = getGameinPage(gamesresult.results!);
+    isSearching = true;
+    notifyListeners();
+    final String result = await getSearchResponse(val);
+    final gamesResult = GamePageDetail.fromJson(json.decode(result));
+    final games = getGameInPage(gamesResult.results!);
     _items = games;
+    isSearching = false;
     notifyListeners();
   }
 
-  List<Results> getGameinPage(List<Results> results) {
+  List<Results> getGameInPage(List<Results> results) {
     final semiResult = results;
     final gameResult = semiResult
         .map((elem) => Results(
@@ -37,11 +40,10 @@ class SearchGames with ChangeNotifier {
     return gameResult;
   }
 
-  Future<String> getsearchresponse(String val) async {
-    final quiry = {'key': 'd03de378dbf64156b5235d851b1d0282', 'search': val};
+  Future<String> getSearchResponse(String val) async {
+    final query = {'key': 'd03de378dbf64156b5235d851b1d0282', 'search': val};
     try {
-      final http.Response response =
-          await http.get(Uri.https('api.rawg.io', '/api/games', quiry));
+      final http.Response response = await http.get(Uri.https('api.rawg.io', '/api/games', query));
 
       return response.body;
     } catch (error) {
